@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Timeseries Dropdown Options Given a request for timeseries options should generate the correct request 1`] = `
+{
+  "data": {},
+  "method": "POST",
+  "url": "/api/timeseries/filter",
+}
+`;
+
+exports[`Timeseries Dropdown Options Given a request for timeseries options should return all timeseries 1`] = `
+[
+  {
+    "id": "bms-råde-BatteryStringCurrent",
+    "label": "Battery String Current Råde",
+    "value": "bms-råde-BatteryStringCurrent",
+  },
+  {
+    "id": "bms-råde-BatteryStringSelfCheckAlarmCode",
+    "label": "Battery String Self Check Alarm Code Råde",
+    "value": "bms-råde-BatteryStringSelfCheckAlarmCode",
+  },
+  {
+    "id": "bms-råde-BatteryStringVoltage",
+    "label": "Battery String Voltage Råde",
+    "value": "bms-råde-BatteryStringVoltage",
+  },
+  {
+    "id": "bms-råde-BatteryStringSOH",
+    "label": "Battery String SOH Råde",
+    "value": "bms-råde-BatteryStringSOH",
+  },
+  {
+    "id": "bms-råde-BatteryStringSOC",
+    "label": "Battery String SOC Råde",
+    "value": "bms-råde-BatteryStringSOC",
+  },
+  {
+    "id": "bms-råde-BatteryStringAlarmCodeLevel3",
+    "label": "Battery String Alarm Code Level3 Råde",
+    "value": "bms-råde-BatteryStringAlarmCodeLevel3",
+  },
+  {
+    "id": "bms-råde-BatteryStringAlarmCodeLevel1",
+    "label": "Battery String Alarm Code Level1 Råde",
+    "value": "bms-råde-BatteryStringAlarmCodeLevel1",
+  },
+  {
+    "id": "bms-råde-BatteryClusterEnergyFlowState",
+    "label": "Battery Cluster Energy Flow State Råde",
+    "value": "bms-råde-BatteryClusterEnergyFlowState",
+  },
+  {
+    "id": "bms-råde-BatteryStringAlarmCodeLevel2",
+    "label": "Battery String Alarm Code Level2 Råde",
+    "value": "bms-råde-BatteryStringAlarmCodeLevel2",
+  },
+]
+`;
+
+exports[`Timeseries Dropdown Options Given a search string for timeseries options should generate the correct request 1`] = `
+{
+  "data": {},
+  "method": "POST",
+  "url": "/api/timeseries/filter",
+}
+`;
+
+exports[`Timeseries Dropdown Options Given a search string for timeseries options should return timeseries with SOC in their id or label 1`] = `
+[
+  {
+    "id": "bms-råde-BatteryStringSOC",
+    "label": "Battery String SOC Råde",
+    "value": "bms-råde-BatteryStringSOC",
+  },
+]
+`;

@@ -1,0 +1,23 @@
+.dropdown {
+  margin-right: 4px;
+  margin-bottom: 4px;
+  max-width: 100%;
+}
+.dropdown--timeseries {
+  width: 25.6rem !important;
+}
+
+.dropdown--aggregation {
+  width: 7rem !important;
+}
+
+.dropdown-label {
+  margin-bottom: 4px;
+}
+
+pre.gf-formatted-error {
+  background: transparent;
+  border: none;
+  padding-bottom: 0;
+  color: #ff6060;
+}
