@@ -1,0 +1,52 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "datasource",
+  "name": "Hagal API Data",
+  "id": "hagal-api-datasource",
+  "metrics": true,
+  "info": {
+    "description": "Hagal API data source",
+    "author": {
+      "name": "Hagal"
+    },
+    "keywords": ["hagal", "timeseries", "datasource"],
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "links": [
+      {
+        "name": "Project site",
+        "url": "https://github.com/hagaltech/hagal-grafana-datasource"
+      },
+      {
+        "name": "Apache License",
+        "url": "https://github.com/hagaltech/hagal-grafana-datasource/blob/main/LICENSE"
+      }
+    ],
+    "screenshots": [
+      { "name": "Data source config", "path": "img/config.png" },
+      { "name": "Time series", "path": "img/ts.png" }
+    ],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=10.0.3",
+    "plugins": []
+  },
+  "routes": [
+    {
+      "path": "api",
+      "url": "{{.JsonData.apiURL}}",
+      "tokenAuth": {
+        "url": "https://{{.JsonData.authDomain}}/oauth/token",
+        "params": {
+          "grant_type": "client_credentials",
+          "client_id": "{{ .SecureJsonData.clientId }}",
+          "client_secret": "{{ .SecureJsonData.clientSecret }}"
+        }
+      }
+    }
+  ]
+}

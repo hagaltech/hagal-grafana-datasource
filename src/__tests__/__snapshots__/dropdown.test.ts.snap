@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Timeseries Dropdown Options Given a request for timeseries options should generate the correct request 1`] = `
+{
+  "data": {},
+  "method": "POST",
+  "url": "/api/timeseries/filter",
+}
+`;
+
+exports[`Timeseries Dropdown Options Given a request for timeseries options should return all timeseries 1`] = `
+[
+  {
+    "id": "bms-BatteryStringCurrent",
+    "label": "Battery String Current Råde",
+    "value": "bms-BatteryStringCurrent",
+  },
+  {
+    "id": "bms-BatteryStringSelfCheckAlarmCode",
+    "label": "Battery String Self Check Alarm Code Råde",
+    "value": "bms-BatteryStringSelfCheckAlarmCode",
+  },
+  {
+    "id": "bms-BatteryStringVoltage",
+    "label": "Battery String Voltage Råde",
+    "value": "bms-BatteryStringVoltage",
+  },
+  {
+    "id": "bms-BatteryStringSOH",
+    "label": "Battery String SOH Råde",
+    "value": "bms-BatteryStringSOH",
+  },
+  {
+    "id": "bms-BatteryStringSOC",
+    "label": "Battery String SOC Råde",
+    "value": "bms-BatteryStringSOC",
+  },
+  {
+    "id": "bms-BatteryStringAlarmCodeLevel3",
+    "label": "Battery String Alarm Code Level3 Råde",
+    "value": "bms-BatteryStringAlarmCodeLevel3",
+  },
+  {
+    "id": "bms-BatteryStringAlarmCodeLevel1",
+    "label": "Battery String Alarm Code Level1 Råde",
+    "value": "bms-BatteryStringAlarmCodeLevel1",
+  },
+  {
+    "id": "bms-BatteryClusterEnergyFlowState",
+    "label": "Battery Cluster Energy Flow State Råde",
+    "value": "bms-BatteryClusterEnergyFlowState",
+  },
+  {
+    "id": "bms-BatteryStringAlarmCodeLevel2",
+    "label": "Battery String Alarm Code Level2 Råde",
+    "value": "bms-BatteryStringAlarmCodeLevel2",
+  },
+]
+`;
+
+exports[`Timeseries Dropdown Options Given a search string for timeseries options should generate the correct request 1`] = `
+{
+  "data": {},
+  "method": "POST",
+  "url": "/api/timeseries/filter",
+}
+`;
+
+exports[`Timeseries Dropdown Options Given a search string for timeseries options should return timeseries with SOC in their id or label 1`] = `
+[
+  {
+    "id": "bms-BatteryStringSOC",
+    "label": "Battery String SOC Råde",
+    "value": "bms-BatteryStringSOC",
+  },
+]
+`;

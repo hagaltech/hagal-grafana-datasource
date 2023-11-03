@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Datasource Query Given "Search Timeseries" queries should generate the correct queries 1`] = `
+{
+  "data": {
+    "aggregates": [
+      "average",
+    ],
+    "end": 1549338475000,
+    "granularity": "1h",
+    "ignoreUnknownIds": false,
+    "items": [
+      {
+        "id": "test1",
+      },
+    ],
+    "limit": 3000,
+    "start": 1549336675000,
+  },
+  "method": "POST",
+  "url": "/api/datapoints/aggregate",
+}
+`;
+
+exports[`Datasource Query Given "Search Timeseries" queries should generate the correct queries 2`] = `
+{
+  "data": {
+    "aggregates": [
+      "min",
+    ],
+    "end": 1549338475000,
+    "granularity": "1h",
+    "ignoreUnknownIds": false,
+    "items": [
+      {
+        "id": "test2",
+      },
+    ],
+    "limit": 3000,
+    "start": 1549336675000,
+  },
+  "method": "POST",
+  "url": "/api/datapoints/aggregate",
+}
+`;
+
+exports[`Datasource Query Given "Search Timeseries" queries should generate the correct queries 3`] = `
+{
+  "data": {
+    "aggregates": [
+      "max",
+    ],
+    "end": 1549338475000,
+    "granularity": "1h",
+    "ignoreUnknownIds": false,
+    "items": [
+      {
+        "id": "test3",
+      },
+    ],
+    "limit": 3000,
+    "start": 1549336675000,
+  },
+  "method": "POST",
+  "url": "/api/datapoints/aggregate",
+}
+`;
+
+exports[`Datasource Query Given "Search Timeseries" queries should generate the correct queries 4`] = `
+{
+  "data": {
+    "ignoreUnknownIds": false,
+    "items": [
+      {
+        "end": 1549338475000,
+        "id": "test4",
+        "limit": 0,
+        "start": 1549336675000,
+      },
+    ],
+  },
+  "method": "POST",
+  "url": "/api/datapoints/list",
+}
+`;
