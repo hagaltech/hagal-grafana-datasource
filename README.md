@@ -8,7 +8,7 @@ This plugin serves as a bridge between Grafana and the [Hagal API](https://api.h
 - **Timeseries Selection:** Pick your desired timeseries ID from a suggested list.
 - **Raw Data Display:** Have the capability to display raw data for a more granular insight.
 
-![Select Timeseries](./images/readme/hagal-api-datasource-editor-mode.png)
+![Select Timeseries](https://raw.githubusercontent.com/hagaltech/hagal-grafana-datasource/main/images/readme/hagal-api-datasource-editor-mode.png)
 
 ## Access Hagal Data Platform
 
@@ -29,7 +29,7 @@ Spin up a Grafana instance and run the plugin inside it
    ```bash
    yarn run server
    ```
-or, for debugging and development, run the plugin in development mode in parallel with a Grafana instance 
+or, for debugging and development, run the plugin in development mode in parallel with a Grafana instance
 
    ```bash
    yarn run server:watch
