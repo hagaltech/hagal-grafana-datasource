@@ -15,4 +15,4 @@ This plugin serves as a bridge between Grafana and the [Hagal API](https://api.h
 **Contact Hagal team**: email you request to info@hagal.com.
 
 ## Development
-For development details, see the [development guide](DEVELOPMENT.md).
+For development details, see the [development guide](https://github.com/hagaltech/hagal-grafana-datasource/blob/main/src/DEVELOPMENT.md).
