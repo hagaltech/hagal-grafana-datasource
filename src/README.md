@@ -1,4 +1,4 @@
-# Hagal API Grafana Data Source plugin
+# Hagal API Data Source for Grafana
 
 This plugin serves as a bridge between Grafana and the [Hagal API](https://api.hagal.com/api/v1), allowing users easily visualize and analyze their Hagal battery telemetry data directly within their Grafana dashboards. With this integration, users can leverage Grafana's powerful visualization tools to gain insights from their Hagal data, making the process of monitoring and decision-making smoother and more efficient.
 
