@@ -18,6 +18,34 @@ import {
 import {getRange} from '../utils';
 import {handleError} from '../appEventHandler';
 
+function splitRange(timeFrame: [start: number, end: number], rawDataEnabled: boolean): number[][] {
+  const start = timeFrame[0];
+  const end = timeFrame[1];
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+
+  const oneDay = 24 * 60 * 60 * 1000; // ms in one day
+  const difference = endDate.getTime() - startDate.getTime();
+
+  let ranges = [];
+
+  // if period is bigger than 24 and no rawDataEnabled => split range
+  if (difference > oneDay && !rawDataEnabled) {
+    const end2Timestamp = endDate.getTime() - oneDay;
+    const start2Timestamp = end2Timestamp;
+
+    ranges = [
+      [start, end2Timestamp],
+      [start2Timestamp, end]
+    ]
+
+  } else {
+    ranges = [[start, end]];
+  }
+
+  return ranges;
+}
+
 export function getDataQueryRequestItem(props: {
   target: TimeSeriesQuery,
   timeFrame: [number, number]
@@ -124,15 +152,21 @@ export class TimeseriesDatasource {
   ): Promise<any> {
     const [start, end] = getRange(options.range);
 
-    const itemsForProxyPromises = options.targets.filter(option => !!option.id).map((target) => {
-      return getDataQueryRequestItem({
-        target,
-        timeFrame: [start, end],
-      });
+    let itemsForProxyPromises: DataSourceRequestOptions[] = [];
+
+    options.targets.filter(option => !!option.id).forEach((target) => {
+      const range = splitRange([start, end], target.rawDataEnabled);
+
+      range.forEach(([start, end]) => {
+        itemsForProxyPromises.push(getDataQueryRequestItem({
+          target,
+          timeFrame: [start, end],
+        }))
+      })
     });
 
-    const data = await Promise.all(
-      itemsForProxyPromises.map(async ({ target, endpoint, method, data }) => {
+    let data: DataSourceItem[] = await Promise.all(
+      itemsForProxyPromises.map(async ({target, endpoint, method, data}) => {
         let response;
 
         try {
@@ -141,13 +175,41 @@ export class TimeseriesDatasource {
             method,
             data
           });
+
+          return {target, data: response.data};
         } catch (err) {
           handleError(err, target.refId, options.requestId);
+
+          return {
+            target, data: {
+              items: [
+                {
+                  id: target.id,
+                  datapoints: []
+                }
+              ]
+            }
+          };
         }
 
-        return { target, data: response ? response.data : null };
       })
     );
+
+    data = data.reduce((acc: DataSourceItem[], current: DataSourceItem) => {
+      const currentId = current.target.refId;
+      const currentDatapoints = current.data.items[0].datapoints;
+
+      const index = acc.findIndex(c => c.target.refId === currentId);
+
+      if (index !== -1) {
+        const datapoints = acc[index].data.items[0].datapoints;
+
+        acc[index].data.items[0].datapoints = datapoints.concat(currentDatapoints)
+      } else {
+        acc.push(current);
+      }
+      return acc;
+    }, [] as DataSourceItem[])
 
     const filteredData = data
       .filter(item => item.data && 'items' in item.data) as DataSourceItem[];

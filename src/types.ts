@@ -46,7 +46,7 @@ export interface TimeSeriesQuery extends DataQuery {
   id: string;
   granularity?: string;
   label?: string;
-  rawDataEnabled?: boolean;
+  rawDataEnabled: boolean;
   name?: string;
   aggregation: AggregatesType;
 }
@@ -129,7 +129,7 @@ export interface ProxyResponseDataPointItem {
 
 export interface ProxyResponseItem {
   id: string;
-  name: string;
+  name?: string;
 }
 
 export interface ProxyResponseDataItem extends ProxyResponseItem {
