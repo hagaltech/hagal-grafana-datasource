@@ -195,21 +195,24 @@ export class TimeseriesDatasource {
       })
     );
 
-    data = data.reduce((acc: DataSourceItem[], current: DataSourceItem) => {
+    // merge data after split by the refId
+    data = Object.values(data.reduce((acc: { [key: string]: DataSourceItem }, current: DataSourceItem) => {
       const currentId = current.target.refId;
       const currentDatapoints = current.data.items[0].datapoints;
 
-      const index = acc.findIndex(c => c.target.refId === currentId);
-
-      if (index !== -1) {
-        const datapoints = acc[index].data.items[0].datapoints;
-
-        acc[index].data.items[0].datapoints = datapoints.concat(currentDatapoints)
+      if (acc[currentId]) {
+        // Concatenate the datapoints if the item already exists in the accumulator
+        acc[currentId].data.items[0].datapoints = [
+          ...acc[currentId].data.items[0].datapoints,
+          ...currentDatapoints,
+        ];
       } else {
-        acc.push(current);
+        // Otherwise, add the new item to the accumulator
+        acc[currentId] = current;
       }
+
       return acc;
-    }, [] as DataSourceItem[])
+    }, {}));
 
     const filteredData = data
       .filter(item => item.data && 'items' in item.data) as DataSourceItem[];
