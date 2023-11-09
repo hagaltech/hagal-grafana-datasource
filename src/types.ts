@@ -166,3 +166,9 @@ export interface QueryRequestError {
 }
 
 export type DropdownOptions = Promise<Array<SelectableValue<string>>>;
+
+export type Range = {
+  start: number;
+  end: number;
+  precomputed?: boolean;
+};
