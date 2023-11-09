@@ -29,7 +29,9 @@ export function stringifyDataError(error: any) {
 }
 
 export function isGranularityGreaterOrEqual1h(granularity: string | undefined): boolean {
-  if(!granularity) return false;
+  if(!granularity) {
+    return false;
+  }
   // Define the number of seconds for each unit
   const unitToSeconds = {
     s: 1,
