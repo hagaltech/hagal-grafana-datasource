@@ -14,14 +14,9 @@ import {
   TimeSeriesQuery,
   DataSourceRequestOptions,
   QueryProxyType,
-  ProxyResponseData
 } from '../types';
 import {getRange, isGranularityGreaterOrEqual1h, splitRange} from '../utils';
 import {handleError} from '../appEventHandler';
-
-type DataItem = Omit<DataSourceItem, 'data'> & {
-  data: ProxyResponseData | null;
-};
 
 export function getDataQueryRequestItem(props: {
   target: TimeSeriesQuery,
@@ -151,7 +146,7 @@ export class TimeseriesDatasource {
         })];
       });
 
-    const data: DataItem[] = await Promise.all(
+    const data = await Promise.all(
       itemsForProxyPromises.map(async ({target, endpoint, method, data}) => {
         let response;
 
@@ -169,11 +164,11 @@ export class TimeseriesDatasource {
       })
     );
 
-    let filteredData = data
+    const filteredData = data
       .filter(item => item.data && 'items' in item.data) as DataSourceItem[];
 
     // Consolidate data items by 'refId' after splitting the range
-    filteredData = Object.values(filteredData.reduce((acc: { [key: string]: DataSourceItem }, current: DataSourceItem) => {
+    const consolidatedData = Object.values(filteredData.reduce((acc: { [key: string]: DataSourceItem }, current: DataSourceItem) => {
       const currentId = current.target.refId;
       const currentDatapoints = current?.data?.items?.[0].datapoints || [];
 
@@ -192,7 +187,7 @@ export class TimeseriesDatasource {
     }, {}));
 
     return await this.convertToDataFrame({
-      queries: filteredData,
+      queries: consolidatedData,
     });
   }
 
