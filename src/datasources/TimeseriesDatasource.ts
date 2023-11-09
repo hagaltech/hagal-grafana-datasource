@@ -13,10 +13,15 @@ import {
   QueryOptions,
   TimeSeriesQuery,
   DataSourceRequestOptions,
-  QueryProxyType
+  QueryProxyType,
+  ProxyResponseData
 } from '../types';
 import {getRange, isGranularityGreaterOrEqual1h, splitRange} from '../utils';
 import {handleError} from '../appEventHandler';
+
+type DataItem = Omit<DataSourceItem, 'data'> & {
+  data: ProxyResponseData | null;
+};
 
 export function getDataQueryRequestItem(props: {
   target: TimeSeriesQuery,
@@ -146,7 +151,7 @@ export class TimeseriesDatasource {
         })];
       });
 
-    let data: DataSourceItem[] = await Promise.all(
+    const data: DataItem[] = await Promise.all(
       itemsForProxyPromises.map(async ({target, endpoint, method, data}) => {
         let response;
 
@@ -157,29 +162,20 @@ export class TimeseriesDatasource {
             data
           });
 
-          return {target, data: response.data};
         } catch (err) {
           handleError(err, target.refId, options.requestId);
-
-          return {
-            target, data: {
-              items: [
-                {
-                  id: target.id,
-                  datapoints: []
-                }
-              ]
-            }
-          };
         }
-
+        return {target, data: response?.data || null};
       })
     );
 
+    let filteredData = data
+      .filter(item => item.data && 'items' in item.data) as DataSourceItem[];
+
     // Consolidate data items by 'refId' after splitting the range
-    data = Object.values(data.reduce((acc: { [key: string]: DataSourceItem }, current: DataSourceItem) => {
+    filteredData = Object.values(filteredData.reduce((acc: { [key: string]: DataSourceItem }, current: DataSourceItem) => {
       const currentId = current.target.refId;
-      const currentDatapoints = current.data.items[0].datapoints;
+      const currentDatapoints = current?.data?.items?.[0].datapoints || [];
 
       if (acc[currentId]) {
         // Concatenate the datapoints if the item already exists in the accumulator
@@ -194,9 +190,6 @@ export class TimeseriesDatasource {
 
       return acc;
     }, {}));
-
-    const filteredData = data
-      .filter(item => item.data && 'items' in item.data) as DataSourceItem[];
 
     return await this.convertToDataFrame({
       queries: filteredData,
