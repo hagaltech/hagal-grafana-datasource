@@ -32,7 +32,7 @@ export function isGranularityGreaterOrEqual1h(granularity: string | undefined): 
   if(!granularity) {
     return false;
   }
-  // Define the number of seconds for each unit
+  // define the number of seconds for each unit
   const unitToSeconds = {
     s: 1,
     m: 60,
@@ -40,7 +40,7 @@ export function isGranularityGreaterOrEqual1h(granularity: string | undefined): 
     d: 86400,
   };
 
-  // Extract the time value and the unit from the granularity string
+  // extract the time value and the unit from the granularity string
   const matches = granularity.match(/^(\d+)([smhd])$/);
   if (!matches) {
     throw new Error('Invalid granularity format');
@@ -49,10 +49,10 @@ export function isGranularityGreaterOrEqual1h(granularity: string | undefined): 
   const value = parseInt(matches[1], 10);
   const unit = matches[2] as keyof typeof unitToSeconds;
 
-  // Convert granularity to seconds
+  // convert granularity to seconds
   const granularityInSeconds = value * unitToSeconds[unit];
 
-  // Check if granularity is greater than or equal to 1 hour (3600 seconds)
+  // check if granularity is greater than or equal to 1 hour (3600 seconds)
   return granularityInSeconds >= unitToSeconds['h'];
 }
 
@@ -67,7 +67,7 @@ export function splitRange(timeFrame: [start: number, end: number]): Range[] {
 
   let ranges = [];
 
-  // if period is bigger than 24
+  // check if period is bigger than 24
   if (difference > oneDay) {
     const end2Timestamp = endDate.getTime() - oneDay;
     const start2Timestamp = end2Timestamp;

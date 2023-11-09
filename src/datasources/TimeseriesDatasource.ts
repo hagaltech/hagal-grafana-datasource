@@ -139,7 +139,7 @@ export class TimeseriesDatasource {
           }));
         }
 
-        // When rawDataEnabled or granularity is less than 1h, just use the single time frame
+        // if rawDataEnabled or granularity is less than 1h, just use the single time frame
         return [getDataQueryRequestItem({
           target,
           timeFrame: [start, end],
@@ -167,19 +167,19 @@ export class TimeseriesDatasource {
     const filteredData = data
       .filter(item => item.data && 'items' in item.data) as DataSourceItem[];
 
-    // Consolidate data items by 'refId' after splitting the range
+    // consolidate data items by 'refId' after splitting the range
     const consolidatedData = Object.values(filteredData.reduce((acc: { [key: string]: DataSourceItem }, current: DataSourceItem) => {
       const currentId = current.target.refId;
       const currentDatapoints = current?.data?.items?.[0].datapoints || [];
 
       if (acc[currentId]) {
-        // Concatenate the datapoints if the item already exists in the accumulator
+        // concatenate the datapoints if the item already exists in the accumulator
         acc[currentId].data.items[0].datapoints = [
           ...acc[currentId].data.items[0].datapoints,
           ...currentDatapoints,
         ];
       } else {
-        // Otherwise, add the new item to the accumulator
+        // otherwise, add the new item to the accumulator
         acc[currentId] = current;
       }
 
