@@ -42,8 +42,9 @@ export function isGranularityGreaterOrEqual1h(granularity: string | undefined): 
 
   // extract the time value and the unit from the granularity string
   const matches = granularity.match(/^(\d+)([smhd])$/);
+
   if (!matches) {
-    throw new Error('Invalid granularity format');
+    return false;
   }
 
   const value = parseInt(matches[1], 10);
