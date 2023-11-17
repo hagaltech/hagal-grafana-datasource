@@ -72,7 +72,7 @@ describe('Datasource Query', () => {
       label
     };
     const tsTargetD: TimeSeriesQueryLike = {
-      refId: 'C',
+      refId: 'D',
       id: id4,
       granularity: '1h',
       rawDataEnabled: true
