@@ -28,35 +28,6 @@ export function stringifyDataError(error: any) {
   return errorMessage;
 }
 
-export function isGranularityGreaterOrEqual1h(granularity: string | undefined): boolean {
-  if(!granularity) {
-    return false;
-  }
-  // define the number of seconds for each unit
-  const unitToSeconds = {
-    s: 1,
-    m: 60,
-    h: 3600,
-    d: 86400,
-  };
-
-  // extract the time value and the unit from the granularity string
-  const matches = granularity.match(/^(\d+)([smhd])$/);
-
-  if (!matches) {
-    return false;
-  }
-
-  const value = parseInt(matches[1], 10);
-  const unit = matches[2] as keyof typeof unitToSeconds;
-
-  // convert granularity to seconds
-  const granularityInSeconds = value * unitToSeconds[unit];
-
-  // check if granularity is greater than or equal to 1 hour (3600 seconds)
-  return granularityInSeconds >= unitToSeconds['h'];
-}
-
 export function splitRange(timeFrame: [start: number, end: number]): Range[] {
   const start = timeFrame[0];
   const end = timeFrame[1];

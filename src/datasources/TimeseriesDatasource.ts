@@ -15,7 +15,7 @@ import {
   DataSourceRequestOptions,
   QueryProxyType,
 } from '../types';
-import {getRange, isGranularityGreaterOrEqual1h, splitRange} from '../utils';
+import {getRange, splitRange} from '../utils';
 import {handleError} from '../appEventHandler';
 
 export function getDataQueryRequestItem(props: {
@@ -131,7 +131,7 @@ export class TimeseriesDatasource {
       .flatMap(target => {
         const { rawDataEnabled, granularity } = target;
 
-        if (!rawDataEnabled && isGranularityGreaterOrEqual1h(granularity)) {
+        if (!rawDataEnabled && granularity && granularity.includes('h')) {
           return splitRange([start, end]).map(range => getDataQueryRequestItem({
             target,
             timeFrame: [range.start, range.end],
